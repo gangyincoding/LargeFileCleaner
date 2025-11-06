@@ -1,0 +1,47 @@
+💾 磁盘空间分析工具 v1.0 - 专业版
+===============================================
+
+🚀 快速开始：
+1. 双击 "DiskCleaner_GUI_Stable.bat" 启动程序
+2. 选择要扫描的文件夹
+3. 设置扫描参数（可选）
+4. 点击"开始扫描"按钮
+5. 查看结果并导出数据
+
+📋 系统要求：
+- Windows 7/8/10/11
+- Python 3.6 或更高版本
+
+🔧 核心文件说明：
+- DiskCleaner_GUI_Stable.bat    主启动文件
+- disk_analyzer_gui_stable.py   GUI主程序
+- disk_scanner_simple.py        扫描引擎
+- export_excel.py               Excel导出功能
+- export_csv.py                 CSV导出功能
+- README.md                     详细说明文档
+- 进度条布局优化说明.md         技术文档
+
+✨ 主要功能：
+- 智能磁盘扫描，快速定位大文件
+- 13种文件类型过滤器
+- 多格式导出（Excel、CSV、HTML）
+- 实时进度显示
+- 专业图形界面
+
+❓ 常见问题：
+Q: 双击bat文件没有反应？
+A: 请确认已安装Python 3.6+并添加到系统PATH
+
+Q: 扫描速度很慢？
+A: 大目录扫描需要时间，请耐心等待进度条完成
+
+Q: 导出的文件打不开？
+A: 请确保安装了对应软件（Excel、浏览器等）
+
+📞 技术支持：
+GitHub仓库：https://github.com/gangyincoding/LargeFileCleaner
+
+===============================================
+* 绿色软件，无需安装，解压即用 *
+* 版本：v1.0 专业版 *
+* 更新时间：2024-11-07 *

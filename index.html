@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>磁盘空间分析工具 v1.0 - 专业版</title>
+    <meta name="description" content="专业的磁盘空间分析工具，帮助快速识别占用磁盘空间的大文件，支持文件类型过滤、多格式导出等功能">
+    <meta name="keywords" content="磁盘分析,空间清理,文件管理,大文件查找,磁盘工具">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            padding: 30px 20px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .screenshot-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+        }
+
+        .screenshot-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .interface-preview {
+            background: #2c3e50;
+            color: #ecf0f1;
+            font-family: 'Consolas', 'Monaco', monospace;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .download-card {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+            color: white;
+        }
+
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .requirements-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .requirements-list li:last-child {
+            border-bottom: none;
+        }
+
+        .requirements-list i {
+            color: var(--success-color);
+            margin-right: 10px;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .badge-custom {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 0 5px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .interface-preview {
+                font-size: 12px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-hdd me-2"></i>
+                磁盘空间分析工具
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="#features">功能特色</a>
+                <a class="nav-link" href="#screenshot">界面预览</a>
+                <a class="nav-link" href="#download">立即下载</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主页横幅 -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">
+                <i class="fas fa-hdd me-3"></i>
+                磁盘空间分析工具
+            </h1>
+            <p class="hero-subtitle">
+                专业级磁盘空间分析解决方案 | 快速定位大文件 | 智能文件类型过滤
+            </p>
+            <div>
+                <span class="badge-custom"><i class="fas fa-check-circle me-1"></i> v1.0 专业版</span>
+                <span class="badge-custom"><i class="fas fa-windows me-1"></i> Windows支持</span>
+                <span class="badge-custom"><i class="fas fa-python me-1"></i> Python 3.6+</span>
+                <span class="badge-custom"><i class="fas fa-download me-1"></i> 绿色软件</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特色 -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">🌟 核心功能特色</h2>
+                <p class="lead text-muted">专业级功能设计，让磁盘分析变得简单高效</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h4>专业图形界面</h4>
+                        <p class="text-muted">简洁直观的操作界面，无需命令行知识，一键启动即可使用</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>智能扫描引擎</h4>
+                        <p class="text-muted">快速扫描指定目录，精准定位占用空间的大文件</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h4>文件类型过滤</h4>
+                        <p class="text-muted">支持13种文件类型分类，精准定位目标文件类型</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-export"></i>
+                        </div>
+                        <h4>多格式导出</h4>
+                        <p class="text-muted">支持Excel、CSV、HTML三种格式，自动打开对应软件</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>实时进度显示</h4>
+                        <p class="text-muted">独占一行进度条设计，清晰显示扫描进度和状态</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4>专业界面设计</h4>
+                        <p class="text-muted">功能按钮居中布局，界面美观专业，操作体验流畅</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 界面预览 -->
+    <section id="screenshot" class="screenshot-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">🖥️ 界面预览</h2>
+                <p class="lead text-muted">简洁专业的操作界面，让磁盘分析变得轻松愉快</p>
+            </div>
+
+            <div class="screenshot-container">
+                <h4 class="text-center mb-4">工具界面布局</h4>
+                <div class="interface-preview">
+┌─────────────────────────────────────────────────────────────────┐
+│                    磁盘空间分析工具 v1.0                        │
+├─────────────────────────────────────────────────────────────────┤
+│ 路径选择: [路径输入框] [浏览...]                                 │
+├─────────────────────────────────────────────────────────────────┤
+│ 快速选择: [下载] [桌面] [文档] [临时] [视频] [音乐]               │
+├─────────────────────────────────────────────────────────────────┤
+│ 扫描设置: 最小:[1MB▼] 最大:[50▼] ☑包含隐藏文件                  │
+├─────────────────────────────────────────────────────────────────┤
+│ 文件类型过滤器: [☑全部文件] [媒体][文档][系统][全选][清除]        │
+│              ☑文档 ☑图片 ☑视频 ☑音频 ☑压缩 ☑程序 ☑代码 ☑其他     │
+├─────────────────────────────────────────────────────────────────┤
+│              [开始扫描] [停止扫描] [导出结果]                    │
+├─────────────────────────────────────────────────────────────────┤
+│ [████████████████████████████████████████████████████] 65%     │
+├─────────────────────────────────────────────────────────────────┤
+│ 扫描结果: [概览] [最大文件]                                     │
+└─────────────────────────────────────────────────────────────────┘
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <i class="fas fa-cogs text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">智能设置</h5>
+                        <p class="text-muted">灵活的扫描参数设置，满足不同分析需求</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <i class="fas fa-chart-pie text-success" style="font-size: 3rem;"></i>
+                        <h5 class="mt-3">详细分析</h5>
+                        <p class="text-muted">全面的扫描结果展示，帮助深入了解磁盘使用情况</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section id="download" class="download-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold text-white">📥 立即下载</h2>
+                <p class="lead text-white-50">绿色软件，无需安装，解压即用</p>
+            </div>
+
+            <div class="download-card">
+                <div class="text-center mb-4">
+                    <i class="fas fa-download text-success" style="font-size: 4rem;"></i>
+                    <h3 class="mt-3">磁盘空间分析工具 v1.0</h3>
+                    <p class="text-muted">专业版 - 完整功能版本</p>
+                </div>
+
+                <div class="d-flex justify-content-center mb-4">
+                    <div class="text-center me-4">
+                        <small class="text-muted">文件大小</small>
+                        <div><strong>~2MB</strong></div>
+                    </div>
+                    <div class="text-center me-4">
+                        <small class="text-muted">版本</small>
+                        <div><strong>v1.0</strong></div>
+                    </div>
+                    <div class="text-center">
+                        <small class="text-muted">更新时间</small>
+                        <div><strong>2024-11-07</strong></div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <!-- 下载链接 - 指向下载包目录 -->
+                    <a href="download_package/" class="download-btn" target="_blank">
+                        <i class="fas fa-download me-2"></i>
+                        下载磁盘空间分析工具
+                    </a>
+                    <p class="text-muted small mt-2">
+                        <i class="fas fa-info-circle me-1"></i>
+                        点击进入下载目录，右键另存为下载所需文件
+                    </p>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-check-circle text-success me-2"></i>系统要求</h6>
+                        <ul class="requirements-list">
+                            <li><i class="fas fa-windows"></i> Windows 7/8/10/11</li>
+                            <li><i class="fas fa-python"></i> Python 3.6 或更高版本</li>
+                            <li><i class="fas fa-memory"></i> 最小 512MB 内存</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-star text-warning me-2"></i>工具特点</h6>
+                        <ul class="requirements-list">
+                            <li><i class="fas fa-check text-success"></i> 绿色软件，无需安装</li>
+                            <li><i class="fas fa-shield-alt text-primary"></i> 安全无毒，放心使用</li>
+                            <li><i class="fas fa-bolt text-warning"></i> 快速扫描，高效分析</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 使用说明 -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">📖 使用说明</h2>
+                <p class="lead text-muted">简单三步，开始磁盘分析之旅</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <div class="mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 24px; font-weight: bold;">
+                            1
+                        </div>
+                    </div>
+                    <h5>下载解压</h5>
+                    <p class="text-muted">下载工具压缩包，解压到任意文件夹</p>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <div class="mb-4">
+                        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 24px; font-weight: bold;">
+                            2
+                        </div>
+                    </div>
+                    <h5>双击启动</h5>
+                    <p class="text-muted">双击 <code>DiskCleaner_GUI_Stable.bat</code> 启动程序</p>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <div class="mb-4">
+                        <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 24px; font-weight: bold;">
+                            3
+                        </div>
+                    </div>
+                    <h5>开始分析</h5>
+                    <p class="text-muted">选择扫描目录，设置过滤条件，点击开始扫描</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-hdd me-2"></i>磁盘空间分析工具</h5>
+                    <p class="text-white-50">专业级磁盘空间分析解决方案</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h6>快速链接</h6>
+                    <div>
+                        <a href="https://github.com/gangyincoding/LargeFileCleaner" class="text-white-50 me-3" target="_blank">
+                            <i class="fab fa-github me-1"></i>GitHub
+                        </a>
+                        <span class="text-white-50">
+                            <i class="fas fa-envelope me-1"></i>联系我们
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-white-50">
+            <div class="text-center">
+                <small class="text-white-50">
+                    © 2024 磁盘空间分析工具 v1.0 | 采用 MIT 协议开源
+                </small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 下载统计（可选）
+        function trackDownload() {
+            console.log('下载按钮被点击');
+            // 这里可以添加下载统计代码
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            setTimeout(function() {
+                document.body.style.transition = 'opacity 0.5s';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
