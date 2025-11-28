@@ -13,7 +13,6 @@ import sys
 from pathlib import Path
 from datetime import datetime
 import time
-import logging
 
 # 尝试导入文件安全检查模块
 try:

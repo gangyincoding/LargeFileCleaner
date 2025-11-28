@@ -25,9 +25,11 @@ nul
 # 运行时生成的文件
 delete_log.txt
 
-# 测试文件夹（可选保留）
-# 测试重复文件/
-# 测试空文件夹/
+# 测试文件夹
+测试重复文件/
+测试空文件夹/
+test_*/
+tests/__pycache__/
 
 # PyInstaller 构建文件
 build/
