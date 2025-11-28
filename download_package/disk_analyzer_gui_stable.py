@@ -525,12 +525,33 @@ class DiskAnalyzerGUI:
         self.duplicates_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         dup_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
+    def reset_all_displays(self):
+        """重置所有显示区域"""
+        try:
+            # 清空所有Treeview
+            for tree in [self.files_tree, self.folders_tree, self.empty_folders_tree, self.duplicates_tree]:
+                for item in tree.get_children():
+                    tree.delete(item)
+
+            # 重置进度条
+            self.progress_var.set(0)
+            self.progress_label.config(text="0%")
+
+            # 重置状态
+            self.status_var.set("")
+
+        except Exception as e:
+            # 静默处理，避免重置过程中的错误影响用户体验
+            pass
+
     def browse_folder(self):
         """浏览文件夹"""
         try:
             folder = filedialog.askdirectory()
             if folder:
                 self.path_var.set(folder)
+                # 路径改变时重置所有显示内容
+                self.reset_all_displays()
         except Exception as e:
             messagebox.showerror("错误", f"浏览文件夹时出错：{str(e)}")
 
@@ -539,45 +560,56 @@ class DiskAnalyzerGUI:
         try:
             downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
             self.path_var.set(downloads_path)
+            self.reset_all_displays()
         except:
             self.path_var.set("C:\\Users\\Public\\Downloads")
+            self.reset_all_displays()
 
     def select_desktop(self):
         """选择桌面"""
         try:
             desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
             self.path_var.set(desktop_path)
+            self.reset_all_displays()
         except:
             self.path_var.set("C:\\Users\\Public\\Desktop")
+            self.reset_all_displays()
 
     def select_documents(self):
         """选择我的文档"""
         try:
             docs_path = os.path.join(os.path.expanduser("~"), "Documents")
             self.path_var.set(docs_path)
+            self.reset_all_displays()
         except:
             self.path_var.set("C:\\Users\\Public\\Documents")
+            self.reset_all_displays()
 
     def select_temp(self):
         """选择临时文件夹"""
         temp_path = os.path.join(os.environ.get("TEMP", "C:\\Temp"))
         self.path_var.set(temp_path)
+        self.reset_all_displays()
 
     def select_videos(self):
         """选择视频文件夹"""
         try:
             videos_path = os.path.join(os.path.expanduser("~"), "Videos")
             self.path_var.set(videos_path)
+            self.reset_all_displays()
         except:
             self.path_var.set("C:\\Users\\Public\\Videos")
+            self.reset_all_displays()
 
     def select_music(self):
         """选择音乐文件夹"""
         try:
             music_path = os.path.join(os.path.expanduser("~"), "Music")
             self.path_var.set(music_path)
+            self.reset_all_displays()
         except:
             self.path_var.set("C:\\Users\\Public\\Music")
+            self.reset_all_displays()
 
     def create_file_type_filter(self, parent):
         """创建文件类型过滤器"""
@@ -785,6 +817,9 @@ class DiskAnalyzerGUI:
         if not os.path.exists(scan_path):
             messagebox.showerror("错误", "选择的路径不存在")
             return
+
+        # 开始新扫描前，重置所有显示内容
+        self.reset_all_displays()
 
         if not SCANNER_AVAILABLE or self.scanner is None:
             messagebox.showinfo("演示模式", f"这是演示模式\n将模拟扫描：{scan_path}")
@@ -2329,6 +2364,10 @@ class DiskAnalyzerGUI:
         if result != 'yes':
             return
 
+        # 清空之前的空文件夹显示
+        for item in self.empty_folders_tree.get_children():
+            self.empty_folders_tree.delete(item)
+
         # 禁用扫描按钮
         self.scan_empty_button.config(state=tk.DISABLED)
         self.empty_selection_label.config(text="扫描中...")
@@ -2709,6 +2748,10 @@ class DiskAnalyzerGUI:
 
         if result != 'yes':
             return
+
+        # 清空之前的重复文件显示
+        for item in self.duplicates_tree.get_children():
+            self.duplicates_tree.delete(item)
 
         # 禁用扫描按钮
         self.scan_dup_button.config(state=tk.DISABLED)
