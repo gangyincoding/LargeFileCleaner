@@ -5,7 +5,7 @@ color 0B
 echo.
 echo ===============================================================
 echo                    Disk Space Analyzer
-echo                   GUI Stable Version v1.0
+echo                   GUI Stable Version v1.4
 echo ===============================================================
 echo.
 

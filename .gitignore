@@ -28,3 +28,12 @@ delete_log.txt
 # 测试文件夹（可选保留）
 # 测试重复文件/
 # 测试空文件夹/
+
+# PyInstaller 构建文件
+build/
+dist/
+*.spec
+
+# 发布包文件（通过GitHub Release发布）
+*.exe
+*.zip
