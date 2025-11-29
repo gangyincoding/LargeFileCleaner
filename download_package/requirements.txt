@@ -1,0 +1,23 @@
+# 磁盘空间分析工具 - 依赖项
+
+# 核心依赖（必需）
+# Python标准库已包含所有核心功能
+# - tkinter (GUI界面)
+# - os, pathlib (文件操作)
+# - threading (多线程)
+# - hashlib (MD5计算)
+
+# 可选依赖（增强功能）
+
+# Excel导出支持
+openpyxl>=3.0.0
+
+# 回收站删除支持（推荐）
+send2trash>=1.8.0
+
+# 打包工具（用于生成EXE）
+pyinstaller>=5.0.0
+
+# 开发工具（可选）
+# pytest>=7.0.0  # 单元测试
+# pylint>=2.0.0  # 代码检查
