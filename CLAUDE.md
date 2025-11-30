@@ -138,13 +138,16 @@ LargeFileCleaner/
 ├── DiskCleaner_GUI_Stable.bat    # Windows 启动脚本
 ├── README.md                     # 项目说明文档
 ├── CLAUDE.md                     # 开发指南（本文件）
-├── 删除功能使用说明.md           # 文件删除功能文档
-├── 文件夹删除功能说明.md         # 文件夹删除功能文档
-├── 空文件夹清理功能说明.md       # 空文件夹清理功能文档（v1.3）
-├── 重复文件检测功能说明.md       # 重复文件检测功能文档（v1.4）
-├── delete_log.txt                # 删除操作日志（自动生成）
-├── index.html                    # 项目介绍页面
-└── download_package/             # 完整下载包（镜像副本）
+├── AGENTS.md                     # AI Agent开发指南
+├── CHANGELOG.md                  # 版本更新历史
+├── LICENSE                       # MIT开源协议
+├── requirements.txt              # Python依赖列表
+├── 使用说明.txt                  # 快速开始指南
+├── 软件信息.txt                  # 软件详细信息
+├── index.html                    # GitHub Pages项目主页
+└── docs/                         # 开发文档目录
+    ├── README.md
+    └── development-reports/      # 开发报告文档
 ```
 
 ## 重要技术细节
@@ -181,15 +184,18 @@ LargeFileCleaner/
 
 ## 发布流程
 
-该项目使用 GitHub Pages 进行展示：
-- `index.html` 作为项目介绍页面
-- `download_package/` 包含完整的可下载文件
-- 支持 ZIP 包一键下载
+该项目使用 GitHub Release 和 GitHub Pages 进行发布：
+- `index.html` 作为项目介绍页面（GitHub Pages）
+- 通过 GitHub Release 发布ZIP包（用户版和完整版）
+- 支持从 Release 一键下载
 
 打包发布时确保：
-1. 所有 Python 文件在 `download_package/` 中同步
-2. 更新版本号和日期信息
-3. 测试 BAT 启动脚本的完整性
+1. 使用 PyInstaller 打包 EXE 文件
+2. 创建用户版ZIP包（包含EXE和文档）
+3. 创建完整版ZIP包（包含用户版+源代码）
+4. 上传ZIP包到 GitHub Release
+5. 更新 `index.html` 中的下载链接
+6. 更新版本号和日期信息
 
 ## Git 工作流
 

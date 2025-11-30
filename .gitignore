@@ -39,3 +39,11 @@ dist/
 # 发布包文件（通过GitHub Release发布）
 *.exe
 *.zip
+
+# 临时打包目录
+user_package/
+full_package/
+download_package/
+
+# 项目清理报告（临时文档）
+项目清理报告.md

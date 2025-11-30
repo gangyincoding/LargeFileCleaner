@@ -251,12 +251,14 @@ LargeFileCleaner/
 ├── export_csv.py                 # CSV导出
 ├── README.md                     # 项目说明文档
 ├── CLAUDE.md                     # 开发指南
-├── 删除功能使用说明.md           # 文件删除功能文档
-├── 文件夹删除功能说明.md         # 文件夹删除功能文档
-├── 空文件夹清理功能说明.md       # 空文件夹清理功能文档
-├── delete_log.txt                # 删除操作日志（自动生成）
-├── index.html                    # 项目介绍页面
-└── download_package/             # 完整下载包（镜像副本）
+├── AGENTS.md                     # AI Agent开发指南
+├── CHANGELOG.md                  # 版本更新历史
+├── LICENSE                       # MIT开源协议
+├── requirements.txt              # Python依赖列表
+├── 使用说明.txt                  # 快速开始指南
+├── 软件信息.txt                  # 软件详细信息
+├── index.html                    # GitHub Pages项目主页
+└── docs/                         # 开发文档目录
 ```
 
 ## 🛠️ 技术特性

@@ -7,8 +7,7 @@
   `file_safety.py` (safety checks), exporters `export_excel.py` and `export_csv.py`.
 - Packaging: `DiskCleaner_v1.4.spec` (PyInstaller). Build artifacts in `build/` and `dist/`.
 - Docs: `docs/` (development reports), user guides at repo root, plus `README.md` and `CHANGELOG.md`.
-- Misc: `DiskCleaner_GUI_Stable.bat` (Windows launcher), `index.html` (project page),
-  `download_package/` (release bundle mirror), `delete_log.txt` (deletion logs).
+- Misc: `DiskCleaner_GUI_Stable.bat` (Windows launcher), `index.html` (GitHub Pages project page).
 
 ## Build, Test, and Development Commands
 
