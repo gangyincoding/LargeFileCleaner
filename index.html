@@ -229,6 +229,46 @@
                 margin: 5px 0;
             }
         }
+
+        /* 回到顶部按钮样式 */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            #back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -463,7 +503,7 @@
                     </div>
                     <div class="text-center">
                         <small class="text-muted">更新时间</small>
-                        <div><strong>2024-11-29</strong></div>
+                        <div><strong>2025-01-02</strong></div>
                     </div>
                 </div>
 
@@ -486,12 +526,6 @@
                     <p class="text-muted mb-2">
                         <i class="fas fa-info-circle me-1"></i>
                         解压即用，完全免费无广告
-                    </p>
-
-                    <!-- 源代码获取提示 -->
-                    <p class="text-muted small mt-3">
-                        <i class="fab fa-github me-1"></i>
-                        需要源代码？访问 <a href="https://github.com/gangyincoding/LargeFileCleaner" target="_blank" class="text-primary">GitHub仓库</a>
                     </p>
                 </div>
 
@@ -582,11 +616,16 @@
             <hr class="bg-white-50">
             <div class="text-center">
                 <small class="text-white-50">
-                    © 2024 磁盘空间分析工具 v1.4.2 | 采用 MIT 协议开源
+                    © 2025 磁盘空间分析工具 v1.4.2 | 采用 MIT 协议开源
                 </small>
             </div>
         </div>
     </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" title="回到顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -710,6 +749,28 @@
 
             console.log('✅ 统计系统初始化完成');
             console.log('📊 不蒜子统计已加载（访问量将在1-2小时后显示）');
+        });
+
+        // ======================
+        // 回到顶部按钮功能
+        // ======================
+        const backToTopButton = document.getElementById('back-to-top');
+
+        // 监听滚动事件
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        // 点击按钮回到顶部
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 
