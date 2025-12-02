@@ -69,7 +69,7 @@ GitHub 仓库：
 https://github.com/gangyincoding/LargeFileCleaner
 
 项目主页：
-https://gangyincoding.github.io/LargeFileCleaner/
+https://www.diskclean.shop/
 
 ═══════════════════════════════════════════
 
@@ -132,7 +132,7 @@ GitHub Issues：
 https://github.com/gangyincoding/LargeFileCleaner/issues
 
 项目主页：
-https://gangyincoding.github.io/LargeFileCleaner/
+https://www.diskclean.shop/
 
 ═══════════════════════════════════════════
 

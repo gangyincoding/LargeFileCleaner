@@ -39,7 +39,7 @@
    查看"功能说明"文件夹中的详细文档
 
 🌐 官方网站：
-   https://gangyincoding.github.io/LargeFileCleaner/
+   https://www.diskclean.shop/
 
 💬 问题反馈：
    https://github.com/gangyincoding/LargeFileCleaner/issues
